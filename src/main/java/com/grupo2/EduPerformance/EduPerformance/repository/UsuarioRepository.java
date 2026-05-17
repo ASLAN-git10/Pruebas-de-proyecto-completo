@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 // Repositorio para la entidad Usuario.
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    
+    java.util.Optional<Usuario> findByEmail(String email);
 }

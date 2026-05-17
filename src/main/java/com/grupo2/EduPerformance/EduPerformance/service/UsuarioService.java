@@ -23,6 +23,9 @@ public class UsuarioService {
     @Autowired
     private PerfilRepository perfilRepository;
 
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
 
 
     // ── Mapeo Entidad → ResponseDTO ──────────────────────────
@@ -48,7 +51,7 @@ public class UsuarioService {
         usuario.setApellido(dto.getApellido());
         usuario.setEdad(dto.getEdad());
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(dto.getPassword()); // ✅ password obligatorio en BD
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword())); // ✅ Encriptar contraseña
 
         if (dto.getPerfilId() != null) {
             Perfil perfil = perfilRepository.findById(dto.getPerfilId())
@@ -91,6 +94,7 @@ public class UsuarioService {
         // 🔐 Solo re-hashea si el cliente envía un password nuevo
         // Evita re-hashear un hash ya existente si el cliente lo envía igual
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            existente.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
         if (dto.getPerfilId() != null) {
