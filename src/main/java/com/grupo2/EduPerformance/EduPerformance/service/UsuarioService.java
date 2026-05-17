@@ -48,8 +48,7 @@ public class UsuarioService {
         usuario.setApellido(dto.getApellido());
         usuario.setEdad(dto.getEdad());
         usuario.setEmail(dto.getEmail());
-
-
+        usuario.setPassword(dto.getPassword()); // ✅ password obligatorio en BD
 
         if (dto.getPerfilId() != null) {
             Perfil perfil = perfilRepository.findById(dto.getPerfilId())
