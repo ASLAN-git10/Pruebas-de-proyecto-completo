@@ -17,7 +17,8 @@ public class Profesor {
 
     // Identificador único del profesor.
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profesor_seq")
+    @SequenceGenerator(name = "profesor_seq", sequenceName = "profesor_seq", allocationSize = 1)
     private Long id;
 
     // Relación Uno a Uno con el Usuario.

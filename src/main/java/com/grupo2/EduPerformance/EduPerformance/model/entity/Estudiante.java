@@ -17,7 +17,8 @@ public class Estudiante {
 
     // Identificador único del estudiante.
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estudiante_seq")
+    @SequenceGenerator(name = "estudiante_seq", sequenceName = "estudiante_seq", allocationSize = 1)
     private Long id;
 
     // Relación Uno a Uno con Usuario (datos base).
