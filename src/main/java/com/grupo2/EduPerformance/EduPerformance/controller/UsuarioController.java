@@ -31,8 +31,15 @@ public class UsuarioController {
 
     @GetMapping("/me")
     public ResponseEntity<UsuarioResponseDTO> getMe(org.springframework.security.core.Authentication authentication) {
+        // Al deshabilitar la seguridad, authentication será null.
+        // Retornamos el administrador por defecto (id = 3) o el primer usuario encontrado para que el frontend funcione.
         if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(401).build();
+            return service.findById(3L) // Asumiendo que 3L es el admin que creamos
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> {
+                        List<UsuarioResponseDTO> all = service.findAll();
+                        return all.isEmpty() ? ResponseEntity.status(401).build() : ResponseEntity.ok(all.get(0));
+                    });
         }
         return service.findByEmail(authentication.getName())
                 .map(ResponseEntity::ok)

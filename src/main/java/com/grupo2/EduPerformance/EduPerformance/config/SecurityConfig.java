@@ -39,14 +39,9 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable) // Deshabilitar CSRF para APIs REST
             .authorizeHttpRequests(auth -> auth
-                // Permitir acceso público a la documentación (Swagger y Scalar)
-                .requestMatchers("/v3/api-docs/**", "/api-docs", "/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/scalar/**").permitAll()
-                // Permitir crear usuarios (registro) sin estar logueado
-                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-                // Cualquier otra petición requiere estar autenticado
-                .anyRequest().authenticated()
-            )
-            .httpBasic(Customizer.withDefaults()); // Usar autenticación básica (Header Authorization: Basic base64)
+                // PERMITIR TODO TEMPORALMENTE:
+                .anyRequest().permitAll()
+            );
 
         return http.build();
     }
