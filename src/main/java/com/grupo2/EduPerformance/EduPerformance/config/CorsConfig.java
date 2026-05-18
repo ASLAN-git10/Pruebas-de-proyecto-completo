@@ -11,7 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://localhost:4200", "http://localhost:8081", "http://localhost:5173") // Puertos comunes de React (CRA/Vite), Angular y Vue
+                .allowedOriginPatterns("*") // Permite cualquier origen (IDE online, AI Studio, local)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
