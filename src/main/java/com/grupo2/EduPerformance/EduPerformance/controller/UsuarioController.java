@@ -29,6 +29,16 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UsuarioResponseDTO> getMe(org.springframework.security.core.Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).build();
+        }
+        return service.findByEmail(authentication.getName())
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public UsuarioResponseDTO create(@Valid @RequestBody UsuarioRequestDTO dto) {
         return service.save(dto);

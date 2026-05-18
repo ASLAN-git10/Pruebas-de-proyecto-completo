@@ -75,6 +75,10 @@ public class UsuarioService {
         return repository.findById(id).map(this::toResponseDTO);
     }
 
+    public Optional<UsuarioResponseDTO> findByEmail(String email) {
+        return repository.findByEmail(email).map(this::toResponseDTO);
+    }
+
     @Transactional
     public UsuarioResponseDTO save(UsuarioRequestDTO dto) {
         return toResponseDTO(repository.save(toEntity(dto)));
